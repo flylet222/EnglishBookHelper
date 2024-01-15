@@ -46,36 +46,28 @@ def extract_txt_one_page(page_layout):
 
 
 def merge_pdfs_with_margin(file1, file2, output_file, margin=10):
-    # Open the PDF files
     pdf1 = fitz.open(file1)
     pdf2 = fitz.open(file2)
 
-    # Create a new PDF for output
     output_pdf = fitz.open()
 
     for i in range(pdf1.page_count):
-        # Load pages from each PDF, if available
         page1 = pdf1.load_page(i)
         page2 = pdf2.load_page(i)
 
-        # Determine the size of the new page
         rect1 = page1.rect
         rect2 = page2.rect
 
         new_width = rect1.width + rect2.width + margin
         new_height = rect1.height
 
-        # Create the new page
         new_page = output_pdf.new_page(width=new_width, height=new_height)
 
-        # Draw the pages on the new page
         new_page.show_pdf_page(rect1, pdf1, i)
         new_page.show_pdf_page(fitz.Rect(rect1.width + margin, rect1[1], new_width, rect1[3]), pdf2, i)
 
-    # Save the output file
     output_pdf.save(output_file)
 
-    # Close the documents
     pdf1.close()
     pdf2.close()
     output_pdf.close()

@@ -6,7 +6,6 @@ client = OpenAI(
 )
 
 def translate_by_box(text_list):
-    #return text_list
     result_list = []
     prompt = """
             You are a translator. You will be given a paragraph in English and asked to translate it into Korean. 
@@ -26,10 +25,4 @@ def translate_by_box(text_list):
         if result == " ":
             result = "번역 실패"
         result_list.append(result)
-    """ with open("result.txt", "w") as f:
-        for t, item in zip(text_list, result_list):
-            f.write(t + "\n")
-            f.write(item + "\n" + "\n")
-    with open("result.txt", "r") as f:
-        result_list = f.readlines() """
     return result_list
